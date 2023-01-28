@@ -1,20 +1,25 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const app = express();
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client/public')));
 
-var app = express();
+// Put all API endpoints under '/api'
+app.get('/api/reviews', (req, res) => {
+  // Return some mock data
+  res.json([{ id: 1, title: 'Book 1', author: 'Author 1' }]);
+});
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/client/public/index.html'));
+});
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+const port = 4000;
+app.listen(port);
+
+console.log(`App listening on port ${port}`);
 
 module.exports = app;
