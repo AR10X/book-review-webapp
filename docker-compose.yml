@@ -1,0 +1,21 @@
+version: '3'
+services:
+  client:
+    build:
+      context: .
+      dockerfile: ./docker/client.Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./client:/usr/src/app"
+    command: "npm start"
+  server:
+    build:
+      context: .
+      dockerfile: ./docker/server.Dockerfile
+    ports:
+      - "4000:4000"
+    volumes:
+      - "./server:/usr/src/app"
+    command: "npm start"
+  
