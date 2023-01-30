@@ -7,15 +7,20 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - "./client:/usr/src/app"
+      - type: bind
+        source: ./client
+        target: /usr/src/app
     command: "npm start"
   server:
     build:
       context: .
       dockerfile: ./docker/server.Dockerfile
+    user: node
     ports:
       - "4000:4000"
     volumes:
-      - "./server:/usr/src/app"
+      - type: bind
+        source: ./server
+        target: /usr/src/app
     command: "npm start"
   
