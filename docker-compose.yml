@@ -3,24 +3,20 @@ services:
   client:
     build:
       context: .
-      dockerfile: ./docker/client.Dockerfile
+      dockerfile: ./client/client.Dockerfile
     ports:
       - "3000:3000"
     volumes:
-      - type: bind
-        source: ./client
-        target: /usr/src/app
+      - ./client:/usr/src/app
     command: "npm start"
   server:
     build:
       context: .
-      dockerfile: ./docker/server.Dockerfile
+      dockerfile: ./server/server.Dockerfile
     user: node
     ports:
       - "4000:4000"
     volumes:
-      - type: bind
-        source: ./server
-        target: /usr/src/app
+      - ./server:/usr/src/app
     command: "npm start"
   
